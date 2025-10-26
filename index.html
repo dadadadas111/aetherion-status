@@ -30,7 +30,7 @@
     <header>
       <h1>Aetherion — Status Page</h1>
       <div class="controls">
-        <input id="apiBase" type="text" placeholder="API base URL (leave empty to use relative)" style="width:360px" />
+    <input id="apiBase" type="text" placeholder="API base URL (default: https://aetherion.dash.id.vn/)" style="width:360px" />
         <button id="saveBtn">Save</button>
         <button id="refreshBtn">Refresh</button>
       </div>
@@ -83,11 +83,12 @@
     function getBase(){
       const v = (localStorage.getItem('aetherion_api_base') || '').trim();
       if(v) return v.replace(/\/+$/,'');
-      // default to relative root
-      return '';
+      // default base URL when none is stored
+      return 'https://aetherion.dash.id.vn';
     }
 
-    apiBaseInput.value = localStorage.getItem('aetherion_api_base') || '';
+    // show the current stored base or the default to make it explicit to the user
+    apiBaseInput.value = localStorage.getItem('aetherion_api_base') || 'https://aetherion.dash.id.vn';
 
     saveBtn.addEventListener('click', ()=>{
       localStorage.setItem('aetherion_api_base', apiBaseInput.value.trim());
