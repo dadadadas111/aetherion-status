@@ -3,166 +3,153 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Aetherion — Status</title>
+  <title>Aetherion — Mystical Strategy Game</title>
+  <meta name="description" content="Aetherion - A mystical strategy game where magic meets tactical combat. Build your realm, master ancient spells, and dominate the battlefield.">
+  <link rel="icon" type="image/png" href="logo.png">
   <style>
-    :root{--up:#1e7e34;--down:#dc3545;--warn:#f0ad4e;--bg:#0f1720;--card:#0b1320;--muted:#9aa4b2}
-    body{font-family:Inter,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#071024, #081426);color:#e6eef6;margin:0;padding:24px}
-    .wrap{max-width:980px;margin:0 auto}
-    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-    h1{font-size:20px;margin:0}
-    .controls{display:flex;gap:8px;align-items:center}
-    input[type=text]{background:#0b1320;border:1px solid #182430;padding:8px;color:#e6eef6;border-radius:6px}
-    button{background:#0ea5a4;border:none;padding:8px 12px;border-radius:6px;color:#062023;cursor:pointer}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-    .card{background:rgba(255,255,255,0.03);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
-    .svc{display:flex;align-items:center;justify-content:space-between}
-    .name{font-weight:600}
-    .status{padding:6px 10px;border-radius:999px;font-weight:700}
-    .up{background:var(--up);color:white}
-    .down{background:var(--down);color:white}
-    .warn{background:var(--warn);color:#1b1b17}
-    pre{background:#02101a;padding:8px;border-radius:6px;overflow:auto;color:#cfe9ff}
-    footer{margin-top:14px;color:var(--muted);font-size:13px}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #0ea5a4;
+      --primary-dark: #0c8584;
+      --bg-dark: #071024;
+      --bg-darker: #050818;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --text: #e6eef6;
+      --text-muted: #9aa4b2;
+      --border: rgba(255, 255, 255, 0.08);
+    }
+    body {
+      font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg-dark), var(--bg-darker));
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    header { padding: 32px 0; border-bottom: 1px solid var(--border); }
+    nav { display: flex; justify-content: space-between; align-items: center; }
+    .logo-section { display: flex; align-items: center; gap: 16px; }
+    .logo { width: 48px; height: 48px; border-radius: 8px; }
+    .brand h1 { font-size: 24px; font-weight: 700; color: var(--text); }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--primary); }
+    .hero { text-align: center; padding: 80px 0; }
+    .hero-logo { width: 160px; height: 160px; margin: 0 auto 32px; border-radius: 24px; box-shadow: 0 20px 60px rgba(14, 165, 164, 0.15); }
+    .hero h2 { font-size: 48px; font-weight: 800; margin-bottom: 16px; background: linear-gradient(135deg, #0ea5a4, #62d4d3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero .tagline { font-size: 20px; color: var(--text-muted); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn { padding: 14px 32px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; font-size: 16px; }
+    .btn-primary { background: var(--primary); color: var(--bg-darker); }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14, 165, 164, 0.3); }
+    .btn-secondary { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.06); border-color: var(--primary); }
+    .features { padding: 60px 0; }
+    .section-title { text-align: center; font-size: 32px; font-weight: 700; margin-bottom: 48px; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .feature-card { background: var(--card-bg); padding: 32px; border-radius: 12px; border: 1px solid var(--border); transition: all 0.3s; }
+    .feature-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(14, 165, 164, 0.1); }
+    .feature-icon { font-size: 32px; margin-bottom: 16px; }
+    .feature-card h3 { font-size: 20px; margin-bottom: 12px; color: var(--text); }
+    .feature-card p { color: var(--text-muted); line-height: 1.6; }
+    footer { padding: 48px 0; border-top: 1px solid var(--border); margin-top: 80px; }
+    .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; }
+    .footer-links a:hover { color: var(--primary); }
+    .copyright { color: var(--text-muted); font-size: 14px; }
+    @media (max-width: 768px) {
+      .hero h2 { font-size: 36px; }
+      .hero .tagline { font-size: 18px; }
+      .nav-links { display: none; }
+      .footer-content { flex-direction: column; text-align: center; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>Aetherion — Status Page</h1>
-      <div class="controls">
-    <input id="apiBase" type="text" placeholder="API base URL (default: https://aetherion.dash.id.vn/)" style="width:360px" />
-        <button id="saveBtn">Save</button>
-        <button id="refreshBtn">Refresh</button>
-      </div>
-    </header>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo-section">
+          <img src="logo.png" alt="Aetherion Logo" class="logo">
+          <div class="brand">
+            <h1>Aetherion</h1>
+          </div>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="status.html">Status</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <div class="grid">
-      <div class="card">
-        <div class="svc"><div class="name">Overall</div><div id="overall" class="status warn">Unknown</div></div>
-        <p style="color:var(--muted);margin:8px 0">Aggregated view of required services (database + cache)</p>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <img src="logo.png" alt="Aetherion" class="hero-logo">
+        <h2>Aetherion</h2>
+        <p class="tagline">Master ancient magic and strategic combat in a mystical realm where every decision shapes your destiny.</p>
+        <div class="cta-buttons">
+          <a href="#" class="btn btn-primary">Play Now</a>
+          <a href="#features" class="btn btn-secondary">Learn More</a>
+        </div>
       </div>
+    </section>
 
-      <div class="card" id="dbCard">
-        <div class="svc"><div class="name">Database</div><div id="dbStatus" class="status warn">Unknown</div></div>
-        <div id="dbBody"></div>
+    <section id="features" class="features">
+      <div class="container">
+        <h2 class="section-title">Game Features</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">⚔️</div>
+            <h3>Tactical Combat</h3>
+            <p>Engage in strategic battles where positioning, timing, and spell combinations determine victory.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔮</div>
+            <h3>Magic System</h3>
+            <p>Master dozens of spells across multiple schools of magic. Combine elements for devastating effects.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🏰</div>
+            <h3>Build Your Realm</h3>
+            <p>Construct and upgrade your fortress, manage resources, and expand your territory.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">👥</div>
+            <h3>Multiplayer Battles</h3>
+            <p>Challenge players worldwide in ranked matches or team up for cooperative campaigns.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎭</div>
+            <h3>Rich Lore</h3>
+            <p>Uncover the mysteries of Aetherion through an immersive story and deep world-building.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Fast-Paced Action</h3>
+            <p>Experience smooth, responsive gameplay optimized for both quick sessions and epic battles.</p>
+          </div>
+        </div>
       </div>
+    </section>
+  </main>
 
-      <div class="card" id="cacheCard">
-        <div class="svc"><div class="name">Cache (Redis)</div><div id="cacheStatus" class="status warn">Unknown</div></div>
-        <div id="cacheBody"></div>
-      </div>
-
-      <div class="card" id="emailCard">
-        <div class="svc"><div class="name">Email Provider (Resend)</div><div id="emailStatus" class="status warn">Unknown</div></div>
-        <div id="emailBody"></div>
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="copyright">
+          &copy; 2025 Aetherion. All rights reserved.
+        </div>
+        <ul class="footer-links">
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="status.html">Service Status</a></li>
+          <li><a href="mailto:support@aetherion.dash.id.vn">Contact</a></li>
+        </ul>
       </div>
     </div>
-
-    <footer>
-      <small>Polling interval: <span id="intervalText">10s</span>. Use the input to change the API base URL and click Save to persist.</small>
-    </footer>
-  </div>
-
-  <script>
-    const apiBaseInput = document.getElementById('apiBase');
-    const saveBtn = document.getElementById('saveBtn');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const overallEl = document.getElementById('overall');
-    const dbStatus = document.getElementById('dbStatus');
-    const dbBody = document.getElementById('dbBody');
-    const cacheStatus = document.getElementById('cacheStatus');
-    const cacheBody = document.getElementById('cacheBody');
-    const emailStatus = document.getElementById('emailStatus');
-    const emailBody = document.getElementById('emailBody');
-    const intervalText = document.getElementById('intervalText');
-
-    const DEFAULT_INTERVAL = 10000;
-    let intervalMs = Number(localStorage.getItem('aetherion_status_interval')) || DEFAULT_INTERVAL;
-    intervalText.textContent = (intervalMs/1000)+"s";
-
-    function getBase(){
-      const v = (localStorage.getItem('aetherion_api_base') || '').trim();
-      if(v) return v.replace(/\/+$/,'');
-      // default base URL when none is stored
-      return 'https://aetherion.dash.id.vn';
-    }
-
-    // show the current stored base or the default to make it explicit to the user
-    apiBaseInput.value = localStorage.getItem('aetherion_api_base') || 'https://aetherion.dash.id.vn';
-
-    saveBtn.addEventListener('click', ()=>{
-      localStorage.setItem('aetherion_api_base', apiBaseInput.value.trim());
-      alert('Saved. Click Refresh to poll.');
-    });
-
-    refreshBtn.addEventListener('click', pollOnce);
-
-    async function fetchJson(url, timeout=7000){
-      const ctrl = new AbortController();
-      const id = setTimeout(()=>ctrl.abort(), timeout);
-      try{
-        const r = await fetch(url, {signal: ctrl.signal, cache: 'no-store'});
-        clearTimeout(id);
-        const txt = await r.text();
-        try{ return {ok: r.ok, status: r.status, json: JSON.parse(txt)} }catch(e){ return {ok: r.ok, status: r.status, text: txt}; }
-      }catch(e){ clearTimeout(id); return {ok:false, error: e.message}; }
-    }
-
-    function setStatus(el, state){
-      el.classList.remove('up','down','warn');
-      if(state === 'Healthy') el.classList.add('up');
-      else if(state === 'Unhealthy') el.classList.add('down');
-      else el.classList.add('warn');
-      el.textContent = state;
-    }
-
-    function renderKeyValue(target, obj){
-      if(!obj) { target.innerHTML = '<pre>no data</pre>'; return; }
-      const pretty = JSON.stringify(obj, null, 2);
-      target.innerHTML = '<pre>'+pretty+'</pre>';
-    }
-
-    async function pollOnce(){
-      const base = getBase();
-      const url = (base || location.origin) + '/health';
-      overallEl.textContent = 'Checking...'; overallEl.className='status warn';
-      dbStatus.textContent = cacheStatus.textContent = emailStatus.textContent = 'Checking...';
-
-      const res = await fetchJson(url, 8000);
-      if(!res.ok){
-        setStatus(overallEl,'Unhealthy');
-        renderKeyValue(dbBody, {error: res.error || ('HTTP '+res.status)});
-        dbStatus.textContent = cacheStatus.textContent = emailStatus.textContent = 'Unreachable';
-        dbStatus.className='status down'; cacheStatus.className='status down'; emailStatus.className='status down';
-        return;
-      }
-
-      const data = res.json || {};
-      setStatus(overallEl, data.status || 'Unknown');
-
-      const checks = data.checks || {};
-
-      // DB
-      const db = checks.database || checks.db || null;
-      renderKeyValue(dbBody, db);
-      setStatus(dbStatus, db && (db.healthy || db.canConnect) ? 'Healthy' : 'Unhealthy');
-
-      // Cache
-      const cache = checks.cache || null;
-      renderKeyValue(cacheBody, cache);
-      setStatus(cacheStatus, cache && cache.healthy ? 'Healthy' : 'Unhealthy');
-
-      // Email
-      const email = checks.resend || checks.email || null;
-      renderKeyValue(emailBody, email);
-      setStatus(emailStatus, email && email.healthy ? 'Healthy' : (email && email.status === 'NotConfigured' ? 'Unknown' : 'Unhealthy'));
-    }
-
-    // initial poll
-    pollOnce();
-    let timer = setInterval(pollOnce, intervalMs);
-
-    // if user changes interval in localStorage, could implement a UI — left as enhancement
-  </script>
+  </footer>
 </body>
 </html>

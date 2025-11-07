@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aetherion — Status</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <style>
+    :root{--up:#1e7e34;--down:#dc3545;--warn:#f0ad4e;--bg:#0f1720;--card:#0b1320;--muted:#9aa4b2}
+    body{font-family:Inter,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#071024, #081426);color:#e6eef6;margin:0;padding:24px}
+    .wrap{max-width:980px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    h1{font-size:20px;margin:0}
+    .controls{display:flex;gap:8px;align-items:center}
+    input[type=text]{background:#0b1320;border:1px solid #182430;padding:8px;color:#e6eef6;border-radius:6px}
+    button{background:#0ea5a4;border:none;padding:8px 12px;border-radius:6px;color:#062023;cursor:pointer}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+    .card{background:rgba(255,255,255,0.03);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
+    .svc{display:flex;align-items:center;justify-content:space-between}
+    .name{font-weight:600}
+    .status{padding:6px 10px;border-radius:999px;font-weight:700}
+    .up{background:var(--up);color:white}
+    .down{background:var(--down);color:white}
+    .warn{background:var(--warn);color:#1b1b17}
+    pre{background:#02101a;padding:8px;border-radius:6px;overflow:auto;color:#cfe9ff}
+    footer{margin-top:14px;color:var(--muted);font-size:13px}
+    .back-link{color:#0ea5a4;text-decoration:none;font-size:14px;display:inline-block;margin-bottom:12px}
+    .back-link:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a href="index.html" class="back-link">← Back to Home</a>
+    <header>
+      <h1>Aetherion — Status Page</h1>
+      <div class="controls">
+    <input id="apiBase" type="text" placeholder="API base URL (default: https://aetherion.dash.id.vn/)" style="width:360px" />
+        <button id="saveBtn">Save</button>
+        <button id="refreshBtn">Refresh</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <div class="svc"><div class="name">Overall</div><div id="overall" class="status warn">Unknown</div></div>
+        <p style="color:var(--muted);margin:8px 0">Aggregated view of required services (database + cache)</p>
+      </div>
+
+      <div class="card" id="dbCard">
+        <div class="svc"><div class="name">Database</div><div id="dbStatus" class="status warn">Unknown</div></div>
+        <div id="dbBody"></div>
+      </div>
+
+      <div class="card" id="cacheCard">
+        <div class="svc"><div class="name">Cache (Redis)</div><div id="cacheStatus" class="status warn">Unknown</div></div>
+        <div id="cacheBody"></div>
+      </div>
+
+      <div class="card" id="emailCard">
+        <div class="svc"><div class="name">Email Provider (Resend)</div><div id="emailStatus" class="status warn">Unknown</div></div>
+        <div id="emailBody"></div>
+      </div>
+    </div>
+
+    <footer>
+      <small>Polling interval: <span id="intervalText">10s</span>. Use the input to change the API base URL and click Save to persist.</small>
+    </footer>
+  </div>
+
+  <script>
+    const apiBaseInput = document.getElementById('apiBase');
+    const saveBtn = document.getElementById('saveBtn');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const overallEl = document.getElementById('overall');
+    const dbStatus = document.getElementById('dbStatus');
+    const dbBody = document.getElementById('dbBody');
+    const cacheStatus = document.getElementById('cacheStatus');
+    const cacheBody = document.getElementById('cacheBody');
+    const emailStatus = document.getElementById('emailStatus');
+    const emailBody = document.getElementById('emailBody');
+    const intervalText = document.getElementById('intervalText');
+
+    const DEFAULT_INTERVAL = 10000;
+    let intervalMs = Number(localStorage.getItem('aetherion_status_interval')) || DEFAULT_INTERVAL;
+    intervalText.textContent = (intervalMs/1000)+"s";
+
+    function getBase(){
+      const v = (localStorage.getItem('aetherion_api_base') || '').trim();
+      if(v) return v.replace(/\/+$/,'');
+      // default base URL when none is stored
+      return 'https://aetherion.dash.id.vn';
+    }
+
+    // show the current stored base or the default to make it explicit to the user
+    apiBaseInput.value = localStorage.getItem('aetherion_api_base') || 'https://aetherion.dash.id.vn';
+
+    saveBtn.addEventListener('click', ()=>{
+      localStorage.setItem('aetherion_api_base', apiBaseInput.value.trim());
+      alert('Saved. Click Refresh to poll.');
+    });
+
+    refreshBtn.addEventListener('click', pollOnce);
+
+    async function fetchJson(url, timeout=7000){
+      const ctrl = new AbortController();
+      const id = setTimeout(()=>ctrl.abort(), timeout);
+      try{
+        const r = await fetch(url, {signal: ctrl.signal, cache: 'no-store'});
+        clearTimeout(id);
+        const txt = await r.text();
+        try{ return {ok: r.ok, status: r.status, json: JSON.parse(txt)} }catch(e){ return {ok: r.ok, status: r.status, text: txt}; }
+      }catch(e){ clearTimeout(id); return {ok:false, error: e.message}; }
+    }
+
+    function setStatus(el, state){
+      el.classList.remove('up','down','warn');
+      if(state === 'Healthy') el.classList.add('up');
+      else if(state === 'Unhealthy') el.classList.add('down');
+      else el.classList.add('warn');
+      el.textContent = state;
+    }
+
+    function renderKeyValue(target, obj){
+      if(!obj) { target.innerHTML = '<pre>no data</pre>'; return; }
+      const pretty = JSON.stringify(obj, null, 2);
+      target.innerHTML = '<pre>'+pretty+'</pre>';
+    }
+
+    async function pollOnce(){
+      const base = getBase();
+      const url = (base || location.origin) + '/health';
+      overallEl.textContent = 'Checking...'; overallEl.className='status warn';
+      dbStatus.textContent = cacheStatus.textContent = emailStatus.textContent = 'Checking...';
+
+      const res = await fetchJson(url, 8000);
+      if(!res.ok){
+        setStatus(overallEl,'Unhealthy');
+        renderKeyValue(dbBody, {error: res.error || ('HTTP '+res.status)});
+        dbStatus.textContent = cacheStatus.textContent = emailStatus.textContent = 'Unreachable';
+        dbStatus.className='status down'; cacheStatus.className='status down'; emailStatus.className='status down';
+        return;
+      }
+
+      const data = res.json || {};
+      setStatus(overallEl, data.status || 'Unknown');
+
+      const checks = data.checks || {};
+
+      // DB
+      const db = checks.database || checks.db || null;
+      renderKeyValue(dbBody, db);
+      setStatus(dbStatus, db && (db.healthy || db.canConnect) ? 'Healthy' : 'Unhealthy');
+
+      // Cache
+      const cache = checks.cache || null;
+      renderKeyValue(cacheBody, cache);
+      setStatus(cacheStatus, cache && cache.healthy ? 'Healthy' : 'Unhealthy');
+
+      // Email
+      const email = checks.resend || checks.email || null;
+      renderKeyValue(emailBody, email);
+      setStatus(emailStatus, email && email.healthy ? 'Healthy' : (email && email.status === 'NotConfigured' ? 'Unknown' : 'Unhealthy'));
+    }
+
+    // initial poll
+    pollOnce();
+    let timer = setInterval(pollOnce, intervalMs);
+
+    // if user changes interval in localStorage, could implement a UI — left as enhancement
+  </script>
+</body>
+</html>
