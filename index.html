@@ -1,87 +1,345 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Aetherion - Battles of Voices</title>
-  <meta name="description" content="Aetherion - Battles of Voices: A mystical strategy game where magic meets tactical combat. Build your realm, master ancient spells, and dominate the battlefield.">
-  <link rel="icon" type="image/png" href="logo.png">
+
+  <meta name="description"
+    content="Aetherion - Battles of Voices – A mystical strategy game blending magic, tactics, and multiplayer combat.">
+
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="stylesheet" href="css/common.css">
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --primary: #0ea5a4;
-      --primary-dark: #0c8584;
-      --bg-dark: #071024;
-      --bg-darker: #050818;
-      --card-bg: rgba(255, 255, 255, 0.03);
-      --text: #e6eef6;
-      --text-muted: #9aa4b2;
-      --border: rgba(255, 255, 255, 0.08);
+    .play-now-btn {
+      padding: 8px 18px;
+      background: var(--primary);
+      border-radius: 6px;
+      font-weight: 700;
+      transition: 0.2s;
     }
-    body {
-      font-family: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
-      background: linear-gradient(180deg, var(--bg-dark), var(--bg-darker));
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.6;
+
+    .nav-links a.play-now-btn {
+      color: #ffffff;
     }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-    header { padding: 32px 0; border-bottom: 1px solid var(--border); }
-    nav { display: flex; justify-content: space-between; align-items: center; }
-    .logo-section { display: flex; align-items: center; gap: 16px; }
-    .logo { width: 48px; height: 48px; border-radius: 8px; }
-    .brand h1 { font-size: 24px; font-weight: 700; color: var(--text); }
-    .nav-links { display: flex; gap: 24px; list-style: none; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--primary); }
-    .hero { text-align: center; padding: 80px 0; }
-    .hero-logo { width: 160px; height: 160px; margin: 0 auto 32px; border-radius: 24px; box-shadow: 0 20px 60px rgba(14, 165, 164, 0.15); }
-    .hero h2 { font-size: 48px; font-weight: 800; margin-bottom: 16px; background: linear-gradient(135deg, #0ea5a4, #62d4d3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero .tagline { font-size: 20px; color: var(--text-muted); margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn { padding: 14px 32px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; font-size: 16px; }
-    .btn-primary { background: var(--primary); color: var(--bg-darker); }
-    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(14, 165, 164, 0.3); }
-    .btn-secondary { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
-    .btn-secondary:hover { background: rgba(255, 255, 255, 0.06); border-color: var(--primary); }
-    .features { padding: 60px 0; }
-    .section-title { text-align: center; font-size: 32px; font-weight: 700; margin-bottom: 48px; }
-    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-    .feature-card { background: var(--card-bg); padding: 32px; border-radius: 12px; border: 1px solid var(--border); transition: all 0.3s; }
-    .feature-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(14, 165, 164, 0.1); }
-    .feature-icon { font-size: 32px; margin-bottom: 16px; }
-    .feature-card h3 { font-size: 20px; margin-bottom: 12px; color: var(--text); }
-    .feature-card p { color: var(--text-muted); line-height: 1.6; }
-    footer { padding: 48px 0; border-top: 1px solid var(--border); margin-top: 80px; }
-    .footer-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
-    .footer-links { display: flex; gap: 24px; list-style: none; }
-    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 14px; }
-    .footer-links a:hover { color: var(--primary); }
-    .copyright { color: var(--text-muted); font-size: 14px; }
-    .about-section { background: var(--card-bg); padding: 40px; border-radius: 12px; border: 1px solid var(--border); margin: 60px 0; text-align: center; }
-    .about-section h3 { font-size: 20px; margin-bottom: 16px; color: var(--text); }
-    .about-section p { color: var(--text-muted); margin-bottom: 12px; }
+
+    .play-now-btn:hover {
+      background: var(--primary-strong);
+    }
+
+
+    /* ================= HERO ================= */
+    .hero {
+      padding: 10px 0 0;
+      text-align: center;
+    }
+
+    .hero-logo {
+      width: 300px;
+      height: 300px;
+      border-radius: 28px;
+      margin-bottom: 32px;
+    }
+
+    .hero h2 {
+      font-size: clamp(36px, 5vw, 70px);
+      font-weight: 900;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, #4fd1c5, #7c7cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      max-width: 680px;
+      margin: 0 auto 42px;
+      font-size: 25px;
+      color: var(--text-muted);
+    }
+
+    /* ================= INTRODUCTION ================= */
+
+
+    .intro-section {
+      margin: 100px auto;
+      max-width: 1200px;
+      padding: 0 24px;
+    }
+
+    .intro-title {
+      font-size: clamp(28px, 4vw, 30px);
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 60px;
+
+      background: linear-gradient(135deg,
+          #6ee7e7,
+          #fbbf24,
+          #8b8cff);
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .intro-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .intro-block.reverse {
+      direction: rtl;
+    }
+
+    .intro-block.reverse>* {
+      direction: ltr;
+    }
+
+    .intro-image {
+      height: 300px;
+      /* border-radius: 18px; */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+    }
+
+    .intro-content h3 {
+      font-size: 26px;
+      margin-bottom: 16px;
+    }
+
+    .intro-content p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .intro-image.story {
+      background-image: url("images/thumbnail_1.jpeg");
+    }
+
+    .intro-image.gameplay {
+      background-image: url("images/thumbnail_2.jpeg");
+    }
+
+    .intro-image.visual {
+      background-image: url("images/thumbnail_3.jpeg");
+    }
+
+    /* ================= DOWNLOADS ================= */
+
+    .download-section {
+      margin: 90px auto;
+      text-align: center;
+    }
+
+    #download-section {
+      scroll-margin-top: 250px;
+    }
+
+    .download-section h3 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 36px;
+    }
+
+    .download-links {
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+
+    .store-link {
+      padding: 26px 34px;
+      transition: all 0.25s ease;
+    }
+
+    .store-link img {
+      height: 100px;
+      width: 200px;
+      display: block;
+    }
+
+    /* ================= ABOUT ================= */
+    .about-section {
+      margin: 80px auto;
+      padding: 46px;
+      max-width: 1400px;
+      width: 100%;
+      text-align: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+    }
+
+    .about-section h3 {
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+
+    .about-section p {
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 28px;
+      margin-top: 24px;
+    }
+
+    .team-member {
+      text-align: center;
+      padding: 24px 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .team-member img {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 14px;
+    }
+
+    .team-member h4 {
+      margin: 6px 0 8px;
+      font-size: 1.15rem;
+    }
+
+    .team-member p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: #ccc;
+    }
+
+    .team-description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    /* ================= FOOTER ================= */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 46px 0;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 22px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .copyright {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ================= RESPONSIVE ================= */
     @media (max-width: 768px) {
-      .hero h2 { font-size: 36px; }
-      .hero .tagline { font-size: 18px; }
-      .nav-links { display: none; }
-      .footer-content { flex-direction: column; text-align: center; }
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        padding: 90px 0 70px;
+      }
+
+      .hero-logo {
+        width: 140px;
+        height: 140px;
+      }
+
+      .intro-block {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .intro-block.reverse {
+        direction: ltr;
+      }
+
+      .intro-image {
+        height: 220px;
+      }
+
+      .team-grid {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+      }
+
+      .hero h2 {
+        font-size: 28px;
+      }
+
+      .tagline {
+        font-size: 18px;
+        max-width: 90%;
+      }
+    }
+
+    @media (max-width: 1200px) {
+      .team-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .store-link img {
+        width: 140px;
+        height: auto;
+      }
     }
   </style>
 </head>
+
 <body>
+
   <header>
     <div class="container">
       <nav>
         <div class="logo-section">
-          <img src="logo.png" alt="Aetherion Logo" class="logo">
-          <div class="brand">
-            <h1>Aetherion</h1>
-          </div>
+          <a href="index.html" style="display: flex; align-items: center; gap: 14px;">
+            <img src="images/logo.png" class="logo" alt="Aetherion Logo">
+            <div class="brand">
+              <h1>Aetherion</h1>
+            </div>
+          </a>
         </div>
         <ul class="nav-links">
-          <li><a href="#features">Features</a></li>
-          <li><a href="status.html">Status</a></li>
+          <li><a href="#download-section" class="play-now-btn">Play Now</a></li>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="codex.html">Codex</a></li>
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="terms.html">Terms</a></li>
         </ul>
@@ -92,62 +350,114 @@
   <main>
     <section class="hero">
       <div class="container">
-        <img src="logo.png" alt="Aetherion" class="hero-logo">
-        <h2>Aetherion - Battles of Voices</h2>
-        <p class="tagline">Master ancient magic and strategic combat in a mystical realm where every decision shapes your destiny.</p>
-        <div class="cta-buttons">
-          <a href="https://dadadadas111.itch.io/aetherion" class="btn btn-primary" target="_blank">Play Now</a>
-          <a href="#features" class="btn btn-secondary">Learn More</a>
+        <img src="images/logo.png" class="hero-logo" alt="Aetherion">
+        <h2>Aetherion – Clash of Voices</h2>
+        <p class="tagline">
+          A mystical strategy game where ancient magic, tactical combat,
+          and voice-driven power collide.
+        </p>
+      </div>
+    </section>
+    <section class="intro-section">
+      <h2 class="intro-title">
+        "Dive into the chaos — where voices become power."
+      </h2>
+
+      <!-- STORY -->
+      <div class="intro-block">
+        <div class="intro-image story"></div>
+        <div class="intro-content">
+          <h3>A World Shaped by Voices</h3>
+          <p>
+            In Aetherion, gods draw their power not from relics or weapons,
+            but from spoken incantations. Ancient realms are torn apart by
+            divine conflicts, where only those who master their voice can
+            dominate the battlefield.
+          </p>
+        </div>
+      </div>
+
+      <!-- GAMEPLAY -->
+      <div class="intro-block reverse">
+        <div class="intro-image gameplay"></div>
+        <div class="intro-content">
+          <h3>Voice-Driven Tactical Combat</h3>
+          <p>
+            Battles unfold in fast-paced 3v3 matches where spells are cast
+            by voice instead of buttons. Every decision matters — timing,
+            positioning, and teamwork define victory.
+          </p>
+        </div>
+      </div>
+
+      <!-- VISUALS -->
+      <div class="intro-block">
+        <div class="intro-image visual"></div>
+        <div class="intro-content">
+          <h3>Handcrafted Pixel Art Visuals</h3>
+          <p>
+            Aetherion features predominantly hand-drawn pixel art, blending
+            stylized arcane effects with carefully crafted visuals to keep
+            battles readable, expressive, and immersive even at the height
+            of chaos.
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="features" class="features">
-      <div class="container">
-        <h2 class="section-title">Game Features</h2>
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-icon">⚔️</div>
-            <h3>Tactical Combat</h3>
-            <p>Engage in strategic battles where positioning, timing, and spell combinations determine victory.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🔮</div>
-            <h3>Magic System</h3>
-            <p>Master dozens of spells across multiple schools of magic. Combine elements for devastating effects.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🏰</div>
-            <h3>Build Your Realm</h3>
-            <p>Construct and upgrade your fortress, manage resources, and expand your territory.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">👥</div>
-            <h3>Multiplayer Battles</h3>
-            <p>Challenge players worldwide in ranked matches or team up for cooperative campaigns.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🎭</div>
-            <h3>Rich Lore</h3>
-            <p>Uncover the mysteries of Aetherion through an immersive story and deep world-building.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3>Fast-Paced Action</h3>
-            <p>Experience smooth, responsive gameplay optimized for both quick sessions and epic battles.</p>
-          </div>
-        </div>
+    <section class="download-section" id="download-section">
+      <h1>Get It On</h1>
+
+      <div class="download-links">
+        <a href="https://gamejolt.com/games/aetherion/1035570" target="_blank" class="store-link">
+          <img src="images/gamejoltlogo.webp" alt="GameJolt" style="transform: scale(1.35);">
+        </a>
+
+        <a href="https://rineikarus123.itch.io/aetherion" target="_blank" class="store-link">
+          <img src="images/itchiologo.svg" alt="itch.io" style="transform: scale(1.25);">
+        </a>
       </div>
     </section>
   </main>
 
   <section class="about-section">
-    <div class="container">
-      <h3>About Aetherion - Battles of Voices</h3>
-      <p><strong>Developer:</strong> dadadadas111</p>
-      <p><strong>Contact:</strong> <a href="mailto:long6athcskl@gmail.com" style="color: var(--primary);">long6athcskl@gmail.com</a></p>
-      <p>Aetherion is an independent mystical strategy game. This homepage provides information about the game, service status, and privacy practices.</p>
-      <p><a href="privacy.html" style="color: var(--primary); text-decoration: none;">View our Privacy Policy</a></p>
+    <h3>Meet the Team</h3>
+    <p class="team-description">
+      Aetherion was crafted by five passionate students who live and breathe competitive MOBA battles. Fueled by coffee,
+      late-night coding, and endless debates about ranks, they turned their love for strategy and magic into this
+      chaotic voice-driven adventure.
+    </p>
+    <div class="team-grid">
+      <div class="team-member">
+        <img src="images/member1.png" alt="ArtWizard" />
+        <h4>Art Wizard</h4>
+        <p>Draws the game, codes the magic, and somehow makes voice spells work.</p>
+      </div>
+
+      <div class="team-member">
+        <img src="images/member2.png" alt="RankLord" />
+        <h4>Rank Lord</h4>
+        <p>Turns match data into ranks, doles out shiny loot, and decides who gets stronger (and who doesn’t)</p>
+      </div>
+
+      <div class="team-member">
+        <img src="images/member3.png" alt="BugHunter" />
+        <h4>Bug Hunter</h4>
+        <p>Does backend magic and occasionally hunts bugs for the team.</p>
+      </div>
+
+      <div class="team-member">
+        <img src="images/member4.png" alt="ConnectionOverlord" />
+        <h4>Connection Overlord</h4>
+        <p>Keeps the game running, makes online magic happen, and keeps players happy.</p>
+      </div>
+
+      <div class="team-member">
+        <img src="images/member5.png" alt="ScreenSorcerer" />
+        <h4>Screen Sorcerer</h4>
+        <p>Crafts the UI, enchants the levels, and decides what madness the players encounter.</p>
+      </div>
+
     </div>
   </section>
 
@@ -155,16 +465,18 @@
     <div class="container">
       <div class="footer-content">
         <div class="copyright">
-          &copy; 2025 Aetherion. All rights reserved.
+          © 2025 Aetherion. All rights reserved.
         </div>
         <ul class="footer-links">
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-          <li><a href="status.html">Service Status</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="status.html">Status</a></li>
           <li><a href="mailto:long6athcskl@gmail.com">Contact</a></li>
         </ul>
       </div>
     </div>
   </footer>
+
 </body>
+
 </html>
