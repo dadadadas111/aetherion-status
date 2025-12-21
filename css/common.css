@@ -125,3 +125,71 @@ nav {
 .nav-links a:hover {
     color: var(--primary);
 }
+
+/* ================= NAV ACTIVE ================= */
+.nav-links a.active {
+  position: relative;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px; /* cách underline với text */
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.play-now-btn {
+    padding: 8px 18px;
+    background: var(--primary);
+    border-radius: 6px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+.nav-links a.play-now-btn {
+    color: #ffffff;
+}
+
+.play-now-btn:hover {
+    background: var(--primary-strong);
+}
+
+/* ================= FOOTER ================= */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 46px 0;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 22px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .copyright {
+      font-size: 14px;
+      color: var(--text-muted);
+    }

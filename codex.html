@@ -4,128 +4,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aetherion — Characters & Spells</title>
-
+  <title>Aetherion</title>
   <link rel="icon" href="images/logo.png" />
+  <link rel="stylesheet" href="css/common.css">
+
 
   <style>
-    /* ================= RESET ================= */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    /* ================= THEME ================= */
-    :root {
-      --primary: #4fd1c5;
-      --primary-strong: #14b8a6;
-      --accent: #7c7cff;
-
-      --bg-1: #040714;
-      --bg-2: #070b1f;
-
-      --card-bg: rgba(255, 255, 255, 0.06);
-      --border: rgba(255, 255, 255, 0.12);
-
-      --text-main: #e6f0ff;
-      --text-muted: #9aa7c7;
-    }
-
-    body {
-      font-family: "Nevis", Arial, sans-serif;
-      color: var(--text-main);
-      min-height: 100vh;
-
-      background:
-        linear-gradient(rgba(4, 7, 20, 0.6), rgba(4, 7, 20, 1)),
-        url("images/background.png");
-
-      background-size: 120% 120%;
-      background-position: 0% 50%;
-      background-repeat: no-repeat;
-      animation: bg-pan 80s ease-in-out infinite;
-    }
-
-    @keyframes bg-pan {
-      0% {
-        background-position: 0% 50%;
-      }
-
-      50% {
-        background-position: 100% 50%;
-      }
-
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-    @font-face {
-      font-family: "Nevis";
-      src: url("fonts/nevis.ttf") format("truetype");
-      font-display: swap;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    /* ================= LAYOUT ================= */
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 0 24px;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      backdrop-filter: blur(12px);
-      background: rgba(4, 7, 20, 0.65);
-      border-bottom: 1px solid var(--border);
-      z-index: 10;
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 0;
-    }
-
-    .logo-section {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      width: 42px;
-      height: 42px;
-    }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 28px;
-    }
-
-    .nav-links a {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    .nav-links a.active,
-    .nav-links a:hover {
-      color: var(--primary);
-    }
-
-    main {
-      padding: 72px 0 96px;
-    }
-
     section {
       margin-bottom: 96px;
       text-align: center;
@@ -146,8 +30,11 @@
     /* ================= GRID ================= */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 28px;
+      grid-template-columns: repeat(auto-fit, 180px);
+      gap: 18px;
+      justify-content: center;
+      max-width: 90%;
+      margin: 0 auto;
     }
 
     /* ================= CHARACTER CARD ================= */
@@ -156,7 +43,7 @@
     }
 
     .character-card img {
-      width: 160px;
+      width: 60px;
       margin-bottom: 16px;
     }
 
@@ -172,13 +59,6 @@
       color: var(--text-muted);
     }
 
-    .role {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--accent);
-    }
-
     .avatar {
       position: relative;
       width: 50%;
@@ -186,6 +66,9 @@
       overflow: hidden;
       border-radius: 16px;
       cursor: pointer;
+      width: 100%;
+      max-width: 160px;
+      margin: 0 auto;
     }
 
     .avatar img {
@@ -193,6 +76,8 @@
       height: 100%;
       object-fit: contain;
       background: rgba(0, 0, 0, 0.25);
+      transition: transform 0.25s ease;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     }
 
 
@@ -238,16 +123,13 @@
       border: 1px solid var(--border);
       border-radius: 22px;
       padding: 28px;
-      max-width: 480px;
-      width: 90%;
-      text-align: center;
-      position: relative;
-    }
 
-    .modal-content img {
-      width: 100%;
-      border-radius: 16px;
-      margin-bottom: 16px;
+      width: 90%;
+      max-width: 980px;
+      max-height: 85vh;
+      overflow-y: auto;
+
+      position: relative;
     }
 
     .modal-content h3 {
@@ -260,6 +142,12 @@
       color: var(--text-muted);
     }
 
+    /* CHARACTER MODAL */
+    .modal-content.character-modal {
+      max-width: 420px;
+      text-align: center;
+    }
+
     .modal-close {
       position: absolute;
       top: 14px;
@@ -269,6 +157,60 @@
       color: var(--text-muted);
     }
 
+    .modal-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .modal-tabs .tab {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 13px;
+      transition: 0.2s;
+    }
+
+    .modal-tabs .tab.active {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .modal-image-wrapper {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .modal-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .modal-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .modal-content::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+    }
+
+    .modal-content.character-modal {
+      max-width: 420px;
+      max-height: 100vh;
+      text-align: center;
+      padding: 24px;
+    }
 
 
     /* ================= SPELL CARD ================= */
@@ -291,7 +233,198 @@
       -webkit-background-clip: text;
     }
 
+    .spell-card {
+      cursor: pointer;
+    }
 
+    /* SPELL AVATAR */
+    .avatar-spell {
+      border-radius: 50%;
+      max-width: 120px;
+      overflow: visible;
+    }
+
+
+    .avatar-spell img {
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow:
+        0 0 0 2px rgba(255, 255, 255, 0.12),
+        0 0 24px rgba(124, 124, 255, 0.35);
+    }
+
+    .avatar-spell .avatar-name {
+      position: static;
+      margin-top: 10px;
+
+      background: none;
+      padding: 0;
+
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      color: var(--text-main);
+    }
+
+    /* ===== SPELL POST LAYOUT ===== */
+    .spell-post {
+      max-width: 520px;
+      padding: 32px;
+    }
+
+    .spell-layout {
+      display: flex;
+      gap: 16px;
+      flex-wrap: nowrap;
+      width: 100%;
+    }
+
+    .spell-header {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .spell-layout {
+      display: flex;
+      gap: 16px;
+      flex-wrap: nowrap;
+      width: 100%;
+    }
+
+    .spell-info {
+      flex: 0 0 50%;
+    }
+
+    .spell-media {
+      flex: 0 0 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* LEFT */
+    .spell-left h3 {
+      font-size: 26px;
+      margin-bottom: 8px;
+    }
+
+    .spell-left p {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* Avatar tròn nhỏ */
+    .spell-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      /* làm tròn */
+      overflow: hidden;
+      /* cắt phần thừa nếu ảnh không đúng tỉ lệ */
+    }
+
+    .spell-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* giữ tỉ lệ và crop ảnh vừa đầy khung */
+      display: block;
+    }
+
+    /* Voice */
+    .spell-voice {
+      font-style: italic;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    /* Stats */
+    .spell-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px 18px;
+      font-size: 14px;
+    }
+
+    .spell-stats div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 10px;
+      color: var(--text-muted);
+      transition: 0.2s;
+    }
+
+    .spell-stats div strong {
+      color: var(--text-main);
+    }
+
+    .spell-stats div:hover {
+      background: rgba(79, 209, 197, 0.1);
+    }
+
+    .spell-stats div:nth-child(odd) {
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .spell-media {
+      flex: 0 0 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    .spell-modal {
+      max-width: 700px;
+      width: 90%;
+      min-height: 50vh;
+      /* tối thiểu 50% màn hình */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* căn giữa theo chiều dọc */
+      overflow-y: auto;
+      padding: 24px;
+      /* border-radius: 22px; */
+      text-align: left;
+    }
+
+
+    .modal-content.spell-modal {
+      max-width: 90%;
+      max-height: 75vh;
+      width: 90%;
+      overflow-y: auto;
+      padding: 24px;
+      /* border-radius: 22px; */
+      text-align: left;
+    }
+
+    .spell-modal .spell-media video {
+      width: 90%;
+      max-width: 100%;
+      height: auto;
+      max-height: 75vh;
+      /* border-radius: 12px; */
+      background: #000;
+      object-fit: cover;
+      display: block;
+    }
+
+    .spell-media video {
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+      /* border-radius: 12px; */
+      object-fit: cover;
+      display: block;
+    }
 
     footer {
       text-align: center;
@@ -309,15 +442,17 @@
     <div class="container">
       <nav>
         <div class="logo-section">
-          <a href="index.html">
+          <a href="index.html" style="display: flex; align-items: center; gap: 14px;">
             <img src="images/logo.png" class="logo" alt="Aetherion Logo">
+            <div class="brand">
+              <h1>Aetherion</h1>
+            </div>
           </a>
-          <strong>Aetherion</strong>
         </div>
-
         <ul class="nav-links">
+          <li><a href="index.html#download-section" class="play-now-btn">Play Now</a></li>
           <li><a href="index.html">Home</a></li>
-          <li><a class="active" href="codex.html">Codex</a></li>
+          <li><a href="codex.html" class="active">Codex</a></li>
           <li><a href="privacy.html">Privacy</a></li>
           <li><a href="terms.html">Terms</a></li>
         </ul>
@@ -329,46 +464,36 @@
 
     <!-- ================= CHARACTERS ================= -->
     <section class="characters-part">
-      <h2>Choose your Gods</h2>
+      <h2>Choose your God</h2>
       <p class="section-desc">
-        Five heroes. Infinite chaos. Each champion bends voice, magic, and questionable balance decisions.
-      </p>
+        Each god embodies a distinct role, personality, and way of dominating the battlefield. </p>
 
       <div class="card-grid">
-        <div class="character-card" data-name="Arcane Mage"
-          data-desc="A master of spoken magic, capable of unleashing devastating spells through perfect incantations. High risk, extreme damage."
-          data-image="images/char_mage_big.gif">
-
+        <div class="character-card" data-name="HEL"
+          data-desc="Born from the fading echo of the First Word, Hel embodies entropy—the inevitable quiet that follows all creation. Her voice is a mournful dirge, a low resonance that drains warmth, color, and motion from the battlefield."
+          data-image="images/char1.png" data-gif="images/char1_gif.gif">
           <div class="avatar">
-            <img src="images/char1.png" alt="Arcane Mage">
-            <span class="avatar-name">Arcane Mage</span>
+            <img src="images/char1.png" alt="Hel">
+            <span class="avatar-name">HEL</span>
           </div>
         </div>
 
-
-
-        <div class="character-card" data-name="Arcane Mage"
-          data-desc="A master of spoken magic, capable of unleashing devastating spells through perfect incantations. High risk, extreme damage."
-          data-image="images/char_mage_big.gif">
-
+        <div class="character-card" data-name="THOR"
+          data-desc="Each shout he unleashes is a command to the storm itself. Lightning answers instinctively, hammering the battlefield with explosive force. His voice fractures stone, shatters barriers, and turns the sky into a weapon."
+          data-image="images/char2.png" data-gif="images/char2_gif.gif">
           <div class="avatar">
-            <img src="images/char_mage.png" alt="Arcane Mage">
-            <span class="avatar-name">Arcane Mage</span>
+            <img src="images/char2.png" alt="Thor">
+            <span class="avatar-name">THOR</span>
           </div>
-
-          <span class="role">Caster</span>
         </div>
 
-        <div class="character-card" data-name="Arcane Mage"
-          data-desc="A master of spoken magic, capable of unleashing devastating spells through perfect incantations. High risk, extreme damage."
-          data-image="images/char_mage_big.gif">
-
+        <div class="character-card" data-name="ABIGAIL"
+          data-desc="Formed from fractured harmonics of the Elder Gods’ voices, Abigail represents potential, evolution, and change. Her voice is unstable but immensely powerful, shifting pitch and meaning mid-utterance."
+          data-image="images/char3.png" data-gif="images/char3_gif.gif">
           <div class="avatar">
-            <img src="images/char_mage.png" alt="Arcane Mage">
-            <span class="avatar-name">Arcane Mage</span>
+            <img src="images/char3.png" alt="Abigail">
+            <span class="avatar-name">ABIGAIL</span>
           </div>
-
-          <span class="role">Caster</span>
         </div>
 
       </div>
@@ -376,101 +501,422 @@
 
     <!-- ================= SPELLS ================= -->
     <section>
-      <h2>Spells & Voice Commands</h2>
+      <h2>Ancient Incantations</h2>
       <p class="section-desc">
-        Magic in Aetherion is divided into ancient schools.
-        Speak the incantation — suffer the consequences.
+        Spells are fragments of ancient speech — power bound to pronunciation.
       </p>
 
-      <!-- ===== Destruction ===== -->
-      <h3 class="spell-category">Destruction</h3>
+      <!-- DESTRUCTION -->
+      <h3 class="spell-category destruction">Destruction</h3>
       <div class="card-grid">
-        <div class="spell-card">
-          <h3>🔥 Fire Burst</h3>
-          <p>Explodes everything in a small, very intentional radius.</p>
-          <span class="voice">Voice: “Fire Burst!”</span>
+        <div class="spell-card destruction" data-name="Divine Thunder"
+          data-desc="After casting, summon a wave of lighting that bounces in random directions."
+          data-image="images/divinethunder.png" data-video="videos/divinethunder.mp4" data-difficulty="HARD"
+          data-cooldown="60s" data-damage="40" data-range="GLOBAL" data-amount="6"
+          data-voice="Storm of judgment, break loose!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/divinethunder.png" alt="Divine Thunder">
+            <span class="avatar-name">Divine Thunder</span>
+          </div>
         </div>
 
-        <div class="spell-card">
-          <h3>💥 Arcane Blast</h3>
-          <p>Raw arcane energy unleashed forward.</p>
-          <span class="voice">Voice: “Arcane Blast!”</span>
+        <div class="spell-card destruction" data-name="Doomsday"
+          data-desc="After casting, summon a meteor that fell from the sky, dealing damage and stun enemies in range."
+          data-image="images/doomdays.png" data-video="videos/doomsday.mp4" data-difficulty="HARD" data-cooldown="60s"
+          data-damage="80" data-range="GLOBAL" data-stun="1s" data-shockwavedamage="10" data-shockwaveduration="3s"
+          data-voice="Heavens, collapse upon my enemies!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/doomdays.png" alt="Doomsday">
+            <span class="avatar-name">Doomsday</span>
+          </div>
         </div>
       </div>
 
-      <!-- ===== Elemental ===== -->
-      <h3 class="spell-category">Elemental</h3>
+      <!-- ELEMENTAL -->
+      <h3 class="spell-category elemental">Elemental</h3>
       <div class="card-grid">
-        <div class="spell-card">
-          <h3>❄ Frost Bind</h3>
-          <p>Freezes enemies in place for a brief moment.</p>
-          <span class="voice">Voice: “Frost Bind!”</span>
+        <div class="spell-card elemental" data-name="Firewave"
+          data-desc="After casting, summon a wave of fireball around the caster, dealing damage to enemy hit."
+          data-image="images/firewave.png" data-video="videos/firewave.mp4" data-difficulty="MEDIUM" data-cooldown="15s"
+          data-damage="20" data-duration="5s" data-voice="I summon a ring of rising flame.">
+
+          <div class="avatar avatar-spell">
+            <img src="images/firewave.png" alt="Firewave">
+            <span class="avatar-name">Firewave</span>
+          </div>
         </div>
 
-        <div class="spell-card">
-          <h3>⚡ Lightning Step</h3>
-          <p>Dash instantly with electric speed.</p>
-          <span class="voice">Voice: “Lightning Step!”</span>
+        <div class="spell-card elemental" data-name="Fireball"
+          data-desc="After casting, fire a fireball at the direction, dealing damage to enemy hit."
+          data-image="images/fireball.png" data-video="videos/fireball.mp4" data-difficulty="EASY" data-cooldown="6s"
+          data-damage="20" data-range="MEDIUM" data-voice="Fireball!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/fireball.png" alt="Fireball">
+            <span class="avatar-name">Fireball</span>
+          </div>
+        </div>
+
+        <div class="spell-card elemental" data-name="Ice Field"
+          data-desc="After casting. summon an icefield that deals damage and slow enemies inside."
+          data-image="images/icefield.png" data-video="videos/icefield.mp4" data-difficulty="MEDIUM" data-cooldown="12s"
+          data-damage="5/s" data-duration="8s" data-slowamount="30%" data-voice="Let the cold claim this ground!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/icefield.png" alt="Ice Field">
+            <span class="avatar-name">Ice Field</span>
+          </div>
+        </div>
+
+        <div class="spell-card elemental" data-name="Ice Spear"
+          data-desc="After casting, shot an ice spear at the direction, freezing and dealing damage to enemy hit."
+          data-image="images/icespear.png" data-video="videos/icespear.mp4" data-difficulty="EASY" data-cooldown="8s"
+          data-damage="20" data-duration="3s" data-range="MEDIUM" data-voice="Ice, form and strike true!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/icespear.png" alt="Ice Spear">
+            <span class="avatar-name">Ice Spear</span>
+          </div>
         </div>
       </div>
 
-      <!-- ===== Necromancy ===== -->
-      <h3 class="spell-category">Necromancy</h3>
+      <!-- NECROMANCY -->
+      <h3 class="spell-category necromancy">Necromancy</h3>
+
       <div class="card-grid">
-        <div class="spell-card">
-          <h3>☠ Soul Drain</h3>
-          <p>Steals life from enemies and feeds the caster.</p>
-          <span class="voice">Voice: “Drain Soul!”</span>
+        <div class="spell-card necromancy" data-name="Zombies"
+          data-desc="After casting, summon a zombies that attack enemies." data-image="images/zombies.png"
+          data-video="videos/zombies.mp4" data-difficulty="HARD" data-cooldown="25s" data-damage="10"
+          data-duration="10s" data-zombiehealth="50" data-range="LOW" data-voice="Rise, and serve me once more!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/zombies.png" alt="Zombies">
+            <span class="avatar-name">Zombies</span>
+          </div>
         </div>
 
-        <div class="spell-card">
-          <h3>🕯 Raise Wraith</h3>
-          <p>Summons a hostile spirit to fight briefly.</p>
-          <span class="voice">Voice: “Rise!”</span>
+        <div class="spell-card necromancy" data-name="Zombat"
+          data-desc="After casting, summon a flying zombies that attack enemies." data-image="images/zombat.png"
+          data-video="videos/zombat.mp4" data-difficulty="HARD" data-cooldown="25s" data-damage="10" data-duration="10s"
+          data-zombiehealth="20" data-range="LOW" data-voice="Rise, winged dead!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/zombat.png" alt="Zombat">
+            <span class="avatar-name">Zombat</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guardian -->
+      <h3 class="spell-category guardian">Guardian</h3>
+
+      <div class="card-grid">
+        <div class="spell-card guardian" data-name="Natural Protection"
+          data-desc="After casting, summon a vine wall that block damage." data-image="images/naturalprotection.png"
+          data-video="videos/naturalprotection.mp4" data-difficulty="MEDIUM" data-cooldown="30s" data-wallhealth="60"
+          data-voice="Nature, form my wall!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/naturalprotection.png" alt="Natural Protection">
+            <span class="avatar-name">Natural Protection</span>
+          </div>
+        </div>
+
+        <div class="spell-card guardian" data-name="Paladin"
+          data-desc="After casting, summon a shield that block damage." data-image="images/paladin.png"
+          data-video="videos/paladin.mp4" data-difficulty="HARD" data-cooldown="20s" data-shieldhealth="80"
+          data-duration="10s" data-voice="Shield of light, guard me!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/paladin.png" alt="Paladin">
+            <span class="avatar-name">Paladin</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Angelic -->
+      <h3 class="spell-category angelic">Angelic</h3>
+
+      <div class="card-grid">
+        <div class="spell-card angelic" data-name="Healing Circle"
+          data-desc="After casting, heal all allies in a circle." data-image="images/heal.png"
+          data-video="videos/healingcircle.mp4" data-difficulty="HARD" data-cooldown="15s" data-amount="20"
+          data-radius="20m" data-voice="Holy radiance, heal those beside me!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/heal.png" alt="Natural Protection">
+            <span class="avatar-name">Natural Protection</span>
+          </div>
+        </div>
+        <div class="spell-card angelic" data-name="Resurrection"
+          data-desc="After casting, revive all allies in a circle." data-image="images/revive.png"
+          data-video="videos/revive.mp4" data-difficulty="HARD" data-cooldown="60s" data-healthafterrevive="10"
+          data-circleradius="MEDIUM" data-voice="Angels of rebirth, restore my fallen!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/revive.png" alt="Resurrection">
+            <span class="avatar-name">Resurrection</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clash -->
+      <h3 class="spell-category clash">Clash</h3>
+
+      <div class="card-grid">
+        <div class="spell-card clash" data-name="Dash"
+          data-desc="After casting, dash toward, immune to damage while dashing." data-image="images/clashdash.png"
+          data-video="videos/dash.mp4" data-difficulty="EASY" data-cooldown="5s" data-range="MEDIUM" data-voice="Dash!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/clashdash.png" alt="Dash">
+            <span class="avatar-name">Dash</span>
+          </div>
+        </div>
+
+        <div class="spell-card clash" data-name="Parry"
+          data-desc="After casting, become immue to damage, refund cooldown if successfully block damage while immue."
+          data-image="images/parry.png" data-video="videos/parry.mp4" data-difficulty="EASY" data-cooldown="8s"
+          data-immuneduration="1s" data-cooldownreduction="50%" data-voice="Parry!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/parry.png" alt="Parry">
+            <span class="avatar-name">Parry</span>
+          </div>
+        </div>
+
+        <div class="spell-card clash" data-name="Quick Slash"
+          data-desc="After casting, summon a sword that deal damage to surrounding enemies."
+          data-image="images/quickslash.png" data-video="videos/slash.mp4" data-difficulty="EASY" data-cooldown="3s"
+          data-damage="30" data-radius="LOW" data-voice="Slash!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/quickslash.png" alt="Quick Slash">
+            <span class="avatar-name">Quick Slash</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arcane -->
+      <h3 class="spell-category arcane">Arcane</h3>
+
+      <div class="card-grid">
+        <div class="spell-card arcane" data-name="Smoke Bomb"
+          data-desc="After casting, throw 5 smoke bomb that blind allies and enemies inside."
+          data-image="images/smokebomb.png" data-video="videos/smokebomb.mp4" data-difficulty="EASY" data-cooldown="20s"
+          data-duration="10s" data-voice="Mist, rise!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/smokebomb.png" alt="Smoke Bomb">
+            <span class="avatar-name">Smoke Bomb</span>
+          </div>
+        </div>
+
+        <div class="spell-card arcane" data-name="Teleport"
+          data-desc="After casting, teleport all allies to selected location." data-image="images/teleport.png"
+          data-video="videos/teleport.mp4" data-difficulty="HARD" data-cooldown="40s" data-distance="GLOBAL"
+          data-radius="MEDIUM" data-voice="Arcane pathways, open! Gather and shift!">
+
+          <div class="avatar avatar-spell">
+            <img src="images/teleport.png" alt="Teleport">
+            <span class="avatar-name">Teleport</span>
+          </div>
         </div>
       </div>
     </section>
-
-
   </main>
 
   <footer>
-    © 2025 Aetherion — Speak wisely.
+    <div class="container">
+      <div class="footer-content">
+        <div class="copyright">
+          © 2025 Aetherion. All rights reserved.
+        </div>
+        <ul class="footer-links">
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="mailto:aetherion.clashofvoices@dash.id.vn">Contact</a></li>
+        </ul>
+      </div>
+    </div>
   </footer>
+  <!-- CHARACTER MODAL -->
   <div class="modal" id="characterModal">
-    <div class="modal-content">
+    <div class="modal-content character-modal" id="modalContent">
       <span class="modal-close">&times;</span>
 
-      <img id="modalImage" src="" alt="">
+      <div class="modal-tabs" id="characterTabs">
+        <button class="tab active" data-type="image">Avatar</button>
+        <button class="tab" data-type="gif">Animation</button>
+      </div>
+
+      <div class="modal-image-wrapper" id="characterImageWrap">
+        <img id="modalImage" src="" alt="">
+      </div>
+
       <h3 id="modalName"></h3>
       <p id="modalDesc"></p>
     </div>
   </div>
+
+  <!-- SPELL MODAL -->
+  <div class="modal" id="spellModal">
+    <div class="modal-content spell-modal">
+      <span class="modal-close">&times;</span>
+
+      <div class="spell-layout">
+        <!-- LEFT -->
+        <div class="spell-info">
+          <div class="spell-header">
+            <img id="spellAvatar" class="spell-avatar" src="" alt="">
+            <h3 id="modalNameSpell"></h3>
+          </div>
+
+          <div id="spellVoice" class="spell-voice"></div>
+          <p id="modalDescSpell"></p>
+          <br />
+
+          <div id="spellStats" class="spell-stats">
+            <div><strong>Difficulty</strong><span id="statDifficulty"></span></div>
+            <div><strong>Cooldown</strong><span id="statCooldown"></span></div>
+            <div><strong>Duration</strong><span id="statDuration"></span></div>
+            <div><strong>Range</strong><span id="statRange"></span></div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="spell-media">
+          <video id="spellVideo" controls></video>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
   <script>
-    const modal = document.getElementById("characterModal");
-    const modalName = document.getElementById("modalName");
-    const modalDesc = document.getElementById("modalDesc");
-    const modalImage = document.getElementById("modalImage");
+    document.addEventListener("DOMContentLoaded", () => {
+      // CHARACTER MODAL
+      const charModal = document.getElementById("characterModal");
+      const charClose = charModal.querySelector(".modal-close");
+      const modalImage = document.getElementById("modalImage");
+      const modalName = document.getElementById("modalName");
+      const modalDesc = document.getElementById("modalDesc");
+      const tabs = document.querySelectorAll(".modal-tabs .tab");
+      let activeCard = null;
 
-    document.querySelectorAll(".character-card").forEach(card => {
-      card.addEventListener("click", () => {
-        modalName.textContent = card.dataset.name;
-        modalDesc.textContent = card.dataset.desc;
-        modalImage.src = card.dataset.image;
+      document.querySelectorAll(".character-card").forEach(card => {
+        card.addEventListener("click", () => {
+          activeCard = card;
+          modalName.textContent = card.dataset.name;
+          modalDesc.textContent = card.dataset.desc;
+          modalImage.src = card.dataset.image;
 
-        modal.classList.add("active");
+          // always show avatar first
+          modalImage.src = card.dataset.image;
+          setActiveTab("image");
+
+          charModal.classList.add("active");
+          document.body.style.overflow = "hidden";
+        });
       });
+
+      charClose.onclick = () => {
+        charModal.classList.remove("active");
+        document.body.style.overflow = "";
+      };
+
+      charModal.onclick = e => e.target === charModal && charClose.onclick();
+
+      tabs.forEach(tab => {
+        tab.onclick = () => {
+          if (!activeCard) return;
+          const type = tab.dataset.type;
+          if (type === "gif" && !activeCard.dataset.gif) return;
+          modalImage.src = activeCard.dataset[type];
+          setActiveTab(type);
+        };
+      });
+
+      function setActiveTab(type) {
+        tabs.forEach(t => t.classList.toggle("active", t.dataset.type === type));
+      }
+
+      // SPELL MODAL
+      const spellModal = document.getElementById("spellModal");
+      const spellClose = spellModal.querySelector(".modal-close");
+      const spellAvatar = document.getElementById("spellAvatar");
+      const spellVideo = document.getElementById("spellVideo");
+      const spellVoice = document.getElementById("spellVoice");
+
+      document.querySelectorAll(".spell-card").forEach(card => {
+        card.addEventListener("click", () => {
+          spellAvatar.src = card.dataset.image;
+          document.getElementById("modalNameSpell").textContent = card.dataset.name;
+          document.getElementById("modalDescSpell").textContent = card.dataset.desc;
+          spellVoice.textContent = card.dataset.voice ? `Voice Command: "${card.dataset.voice}"` : "";
+
+          // Xóa cũ
+          const statsContainer = document.getElementById("spellStats");
+          statsContainer.innerHTML = "";
+
+          // Duyệt tất cả data-* của card
+          for (let key in card.dataset) {
+            if (["name", "desc", "image", "video", "voice"].includes(key)) continue; // bỏ qua những field hiển thị riêng
+            const statDiv = document.createElement("div");
+            const statName = document.createElement("strong");
+            statName.textContent = key.replace(/([A-Z])/g, " $1").replace(/^./, str => str.toUpperCase()); // CamelCase -> text
+            const statValue = document.createElement("span");
+            statValue.textContent = card.dataset[key] || "-";
+
+            statDiv.appendChild(statName);
+            statDiv.appendChild(statValue);
+            statsContainer.appendChild(statDiv);
+          }
+
+          // Video autoplay
+          if (card.dataset.video) {
+            spellVideo.src = card.dataset.video;
+            spellVideo.style.display = "block";
+            spellVideo.muted = true; // autoplay cần muted
+            spellVideo.currentTime = 0;
+            spellVideo.play();
+          } else {
+            spellVideo.pause();
+            spellVideo.style.display = "none";
+            spellVideo.src = "";
+          }
+
+          spellModal.classList.add("active");
+          document.body.style.overflow = "hidden";
+        });
+      });
+
+
+      spellClose.onclick = () => {
+        spellModal.classList.remove("active");
+        document.body.style.overflow = "";
+        spellVideo.pause();
+        spellVideo.currentTime = 0;
+      };
+
+      spellModal.onclick = e => e.target === spellModal && spellClose.onclick();
+
+      document.onkeydown = e => {
+        if (e.key === "Escape") {
+          charClose.onclick();
+          spellClose.onclick();
+        }
+      };
+
+      function setText(id, value) {
+        document.getElementById(id).textContent = value || "-";
+      }
     });
 
-    document.querySelector(".modal-close").onclick = () => {
-      modal.classList.remove("active");
-    };
-
-    modal.onclick = (e) => {
-      if (e.target === modal) modal.classList.remove("active");
-    };
   </script>
-
 </body>
 
 </html>
