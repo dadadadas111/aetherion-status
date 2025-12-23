@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://aetherion-status.dash.id.vn/sitemap.xml
